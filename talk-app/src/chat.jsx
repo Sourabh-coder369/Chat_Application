@@ -98,7 +98,6 @@ export function Chat(){
                         }
                     })}
                 })
-            console.log("inside mount",uncheckedFlag)
             setUnchecked(uncheckedFlag);
         }
     },[mountedMessages])
