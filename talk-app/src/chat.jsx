@@ -139,7 +139,7 @@ export function Chat(){
         
         if(JSON.stringify(allUSers)!=JSON.stringify(arr2)){
         setAllUSers([...arr2]);}
-        globalAllUsers=arr2;
+
         console.log("arr2",arr2,"arr1",activePeopleId);
 }
     },[activePeopleId,allUSers])
