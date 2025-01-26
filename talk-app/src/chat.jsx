@@ -10,11 +10,8 @@ import { MessageSquare, LogOut, Send } from 'lucide-react';
 let wss=null;
 let uncheckedFlag=null
 let prevSelectedUsername="";
-let globalAllUsers=[];
-
 
 export function Chat(){
-    //const [wss,setWss]=useState(null)
     const [textValue,setTextValue]=useState("");
     const {username,setUsername,id,setId}=useContext(UserContext)
     const [flag,setFlag]=useState(false);
