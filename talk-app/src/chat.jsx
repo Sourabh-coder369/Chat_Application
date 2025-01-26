@@ -251,9 +251,9 @@ export function Chat(){
     }
 
     function formatCreatedAt(createdAt) {
-        const dateObj = new Date(createdAt); // Convert the MongoDB timestamp to a Date object
+        const dateObj = new Date(createdAt);
       
-        const date = dateObj.getDate(); // Get the day of the month (1-31)
+        const date = dateObj.getDate();
         const year = dateObj.getFullYear(); // Get the year (e.g., 2025)
       
         // Get the month as a string (e.g., "January")
