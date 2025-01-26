@@ -235,6 +235,8 @@ wss.on('connection', async (ws, req) => {
         }
     });
 
+    console.log("hey")
+
     /*console.log([...wss.clients].map(c => ({ username: c.username, userId: c.userId })));*/
 
     ws.on('close', () => {
