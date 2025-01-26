@@ -36,11 +36,11 @@ export function Chat(){
                 const res = await axios.get('/profile');
                 console.log("login",res.data.login);
                 if(res.data.login) {
-                    //console.log("entered");
+          
                     setUsername(res.data.username);
                     setId(res.data.id);
                     if(!wss){
-                    connectWs(); // Call connectWs directly
+                    connectWs();
                 }
             }
                 setFlag(true);
@@ -55,8 +55,8 @@ export function Chat(){
             console.log("removing old connections")
             wss.removeEventListener('close',callback);
             handleClose();}})
-            //console.log("username",username)
-    },[username]) // Empty dependency array to run only on mount
+            
+    },[username])
 
     useEffect(()=>{
         if(messageEnd.current){
@@ -71,16 +71,6 @@ export function Chat(){
     useEffect(()=>{
         console.log("changed",unchecked,latestMessage)
         if(uncheckedFlag && latestMessage){
-            /*setUnchecked(prev =>(
-                prev.map(({name,value})=>{
-                    if(name==latestMessage.sender){
-                        return {name,value:value+1}
-                    }
-                    else{
-                        return {name,value:value}
-                    }
-                })
-            ))*/
             uncheckedFlag=uncheckedFlag.map(({name,value})=>{
                 if(name==latestMessage.sender && name!=activePeople[selectedUsername]){
                     return {name,value:value+1}
@@ -127,7 +117,6 @@ export function Chat(){
 
     useEffect(()=>{
         if(allUSers && activePeopleId){
-        const arrUsers=[...allUSers]
 
         let arr2=[...allUSers].sort((a,b)=>{
             const aInArr1 = activePeopleId.includes(a._id);
@@ -172,7 +161,6 @@ export function Chat(){
 
     async function logout(){
         const res=await axios.get('/logout');
-        //console.log(res)
 
         wss.send(JSON.stringify({action:"logout"}))
 
@@ -184,12 +172,10 @@ export function Chat(){
     }
 
     async function connectWs() {
-        //const ws = new WebSocket('ws://localhost:4000');
         wss = new WebSocket('ws://localhost:4000');
     
         wss.onopen = () => {
             console.log("WebSocket Connected");
-            //setWss(ws);
         };
     
 
@@ -199,17 +185,7 @@ export function Chat(){
 
         const allRegister=await axios.get('/allusers')
 
-        
-        //console.log("arr2",arr2,activePeopleId)
         setAllUSers([...allRegister.data["registered"]])
-    
-        /*return () => {
-            ws.removeEventListener('message', handleMessage);
-            console.log("hello");
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.close();
-            }
-        };*/
     }
     
 
@@ -232,8 +208,6 @@ export function Chat(){
             uncheckedFlag=tempUnchecked;
 
             console.log("people",people)
-            //console.log(tempUnchecked);
-            //setUnchecked(tempUnchecked);
             
             setActivePeople(()=>({...people}))
             setActivePeopleId(arr)}
@@ -247,17 +221,7 @@ export function Chat(){
             else{
             console.log("latestmessage",typeInfo)
             setLatestMessage(typeInfo)
-            /*if(unchecked){
-                setUnchecked(prev =>(
-                    prev.map(({name,value})=>{
-                        if(name==typeInfo.sender){
-                            return {name,value:value+1}
-                        }
-                        else{
-                            return {name,value:value}
-                        }
-                    })
-                ))}*/
+        
             setMessages((prev)=>([...prev,typeInfo]))}
         }
         
@@ -278,17 +242,12 @@ export function Chat(){
     }
 
     function formatTo12HourTime(createdAt) {
-        const date = new Date(createdAt); // Convert the createdAt timestamp to a Date object
-        let hours = date.getHours(); // Get hours (0-23)
-        const minutes = date.getMinutes(); // Get minutes
-        const ampm = hours >= 12 ? "PM" : "AM"; // Determine AM/PM
+        const date = new Date(createdAt); 
+        let hours = date.getHours();
+        const minutes = date.getMinutes()
     
-        // Convert 24-hour time to 12-hour time
-    
-        // Format minutes to always show two digits
         const formattedMinutes = minutes.toString().padStart(2, "0");
     
-        // Return the formatted time
         return `${hours}:${formattedMinutes}`;
     }
 
@@ -328,11 +287,6 @@ export function Chat(){
         }
     })
     
-
-    //console.log("modifified",unchecked)
-    //console.log("late",unchecked)
-    //console.log("allUsers",allUSers)
-    //console.log(uncheckedFlag,mountedMessages)
     console.log("messages",updatedMessages)
     let tempDay=0;
     if(username=='' && flag){
