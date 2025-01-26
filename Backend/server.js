@@ -238,7 +238,7 @@ wss.on('connection', async (ws, req) => {
     console.log("hey")
 
     /*console.log([...wss.clients].map(c => ({ username: c.username, userId: c.userId })));*/
-
+    console.log("hello")
     ws.on('close', () => {
         /*[...wss.clients].forEach(client => {
             if (client.readyState === webSocket.OPEN) {
